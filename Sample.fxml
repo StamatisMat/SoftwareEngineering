@@ -7,6 +7,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
@@ -15,9 +17,41 @@
          <top>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="18.0" mnemonicParsing="false" text="Backwards" ButtonBar.buttonData="LEFT" />
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" text="Play" ButtonBar.buttonData="LEFT" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Forward" ButtonBar.buttonData="LEFT" />
+                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
+                     <graphic>
+                        <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/rewind.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="95.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
+                     <graphic>
+                        <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/play.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="227.0" layoutY="65.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
+                     <graphic>
+                        <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/fastforward.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Button>
               </buttons>
             </ButtonBar>
          </top>
