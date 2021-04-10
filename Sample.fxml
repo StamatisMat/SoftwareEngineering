@@ -9,14 +9,14 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="415.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<BorderPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <center>
       <BorderPane prefHeight="600.0" prefWidth="655.0" BorderPane.alignment="CENTER">
          <top>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
                   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="18.0" mnemonicParsing="false" text="Backwards" ButtonBar.buttonData="LEFT" />
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Play" ButtonBar.buttonData="LEFT" />
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" text="Play" ButtonBar.buttonData="LEFT" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Forward" ButtonBar.buttonData="LEFT" />
               </buttons>
             </ButtonBar>
@@ -24,7 +24,7 @@
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <center>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                  <TextArea prefHeight="352.0" prefWidth="399.0" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </center>
@@ -34,7 +34,7 @@
       </BorderPane>
    </center>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
+      <MenuBar prefHeight="27.0" prefWidth="388.0" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
