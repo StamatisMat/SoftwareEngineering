@@ -103,7 +103,7 @@
                   <MenuItem mnemonicParsing="false" text="Open" />
                   <MenuItem mnemonicParsing="false" text="Save" />
                   <MenuItem mnemonicParsing="false" text="Recent FIles" />
-              <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
             </items>
           </Menu>
           <Menu disable="true" mnemonicParsing="false" text="Edit" visible="false">
@@ -111,7 +111,7 @@
                   <MenuItem mnemonicParsing="false" text="Play" />
                   <MenuItem mnemonicParsing="false" text="Pause" />
                   <MenuItem mnemonicParsing="false" text="Stop" />
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
