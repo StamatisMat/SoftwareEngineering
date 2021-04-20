@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
@@ -32,21 +32,40 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <ButtonBar prefHeight="68.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <buttons>
-                      <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
+                  <Slider cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" scaleX="0.75" showTickLabels="true" showTickMarks="true" GridPane.rowIndex="1" />
+                  <Slider maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" scaleX="0.75" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Volume" />
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Pitch" GridPane.columnIndex="2" />
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                      <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeeddown" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="1">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                            <graphic>
                               <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/rewind.png" />
                                  </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
                               </ImageView>
                            </graphic>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePlay" style="-fx-background-color: transparent;" textAlignment="CENTER">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                        </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="95.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
                            <graphic>
                               <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -54,11 +73,11 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                        </Button>
+                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeedup" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="3">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                        </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="227.0" layoutY="65.0" mnemonicParsing="false" prefHeight="26.0" style="-fx-background-color: transparent;" textAlignment="CENTER" ButtonBar.buttonData="LEFT">
                            <graphic>
                               <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -66,27 +85,36 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
                         </Button>
-                    </buttons>
-                  </ButtonBar>
-                  <Slider cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" scaleX="0.75" showTickLabels="true" showTickMarks="true" GridPane.rowIndex="1" />
-                  <Slider maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" scaleX="0.75" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Volume" />
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Pitch" GridPane.columnIndex="2" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleStop" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="2">
+                           <graphic>
+                              <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/stop.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </GridPane>
                </children>
             </GridPane>
          </top>
          <center>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-               <center>
-                  <TextArea prefHeight="478.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-               </center>
+            <BorderPane>
                <right>
-                  <ListView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+                  <ListView fx:id="lista" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
                </right>
+               <center>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <center>
+                        <TextArea fx:id="textArea" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <Label fx:id="filename" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="FileName" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </center>
             </BorderPane>
          </center>
          <opaqueInsets>
@@ -100,23 +128,23 @@
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Open" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLoad" text="Open" />
                   <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Recent FIles" />
+                  <MenuItem mnemonicParsing="false" text="Recent Files" />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
             </items>
           </Menu>
-          <Menu disable="true" mnemonicParsing="false" text="Edit" visible="false">
+          <Menu mnemonicParsing="false" text="Edit">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Play" />
-                  <MenuItem mnemonicParsing="false" text="Pause" />
-                  <MenuItem mnemonicParsing="false" text="Stop" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePlay" text="Play" />
+                  <MenuItem mnemonicParsing="false" onAction="#handlePause" text="Pause" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleStop" text="Stop" />
                   <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
             </items>
           </Menu>
         </menus>
