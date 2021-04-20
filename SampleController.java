@@ -26,6 +26,7 @@ public class SampleController {
 	float speed=130.0f;
 	 Voice voice;
 	 AudioPlayer audioplayer;
+	 boolean isPlaying=false;
 	 Thread speechThread = new Thread(new Runnable() {
          public void run() {            
          }
@@ -53,11 +54,8 @@ public class SampleController {
         playbutton.setVisible(!var);
         pausebutton.setDisable(!var);
         pausebutton.setVisible(var);
-        
     }
 	
-	
-
 	@FXML
 	private void handlePlay() {
 		setPauseButton(true);
@@ -78,8 +76,9 @@ public class SampleController {
     	int listsize=lista.getItems().size();
     	System.out.println(temp_text);
     	if(listsize>0) {
-    		if(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals("")) {
+    		if(isPlaying&&(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals(""))) {
     			System.out.println(temp_text);
+    			System.out.println("prepei na paw parakatw");
     			handleContinue();
     			return;
     		}
@@ -87,13 +86,14 @@ public class SampleController {
     	}
     	
 		if(speechThread.isAlive()){ 
-			 handleStop();
-			 speechThread.stop();
-			 System.out.println("Eimai edw");
+			
+			audioplayer=voice.getAudioPlayer();
+	        audioplayer.cancel();
+			speechThread.stop();
+			System.out.println("Eimai edw");
 		}
 		
 		final String text =temp_text;
-	
     	lista.getItems().add(temp_text);
         VoiceManager voiceManager = VoiceManager.getInstance();
         voice = voiceManager.getVoice("kevin");
@@ -104,9 +104,11 @@ public class SampleController {
         //voice.speak(text);
         speechThread = new Thread(new Runnable() {
             public void run() {
+            	isPlaying=true;
                 voice.speak(text);
+                
                 setPauseButton(false);
-               
+                isPlaying=false;
             }
         });
         speechThread.setDaemon(true);//kill all threads after main window close
@@ -130,6 +132,8 @@ public class SampleController {
 	@FXML
 	private void handleStop() {
 		setPauseButton(false);
+		isPlaying=false;
+		speechThread.stop();
 		audioplayer=voice.getAudioPlayer();
         audioplayer.cancel();
 	}//End handleStop
