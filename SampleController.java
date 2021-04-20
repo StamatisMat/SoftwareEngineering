@@ -58,7 +58,7 @@ public class SampleController {
     	String temp_text = textArea.getSelectedText();
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
-            System.out.println(temp_text);
+            //System.out.println(temp_text);
             if(temp_text.equals("")) {
                 setPauseButton(false);
                 return;
@@ -66,11 +66,11 @@ public class SampleController {
         }
     	
     	int listsize=lista.getItems().size();
-    	System.out.println(temp_text);
+    	//System.out.println(temp_text);
     	if(listsize>0) {
     		if(isPlaying&&(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals(""))) {
-    			System.out.println(temp_text);
-    			System.out.println("prepei na paw parakatw");
+    			//System.out.println(temp_text);
+    			//System.out.println("prepei na paw parakatw");
     			handleContinue();
     			return;
     		}
@@ -88,13 +88,13 @@ public class SampleController {
 	@FXML
 	private void handleSpeedup() {
 		speed+=10;
-		System.out.println(speed);
+		//System.out.println(speed);
 	}//End handle
 	
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
-		System.out.println(speed);
+		//System.out.println(speed);
 	}//End handleSpeeddown
 	
 	@FXML

@@ -15,7 +15,7 @@ public class FTTSGenerator {
 	     //    }
 	     //});
 	}
-	public void generateFTTS(String text,float speed,float pitch) {
+	public void generateFTTS(final String text,float speed,float pitch) {
 		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
         VoiceManager voiceManager = VoiceManager.getInstance();
         voice = voiceManager.getVoice("kevin16");
