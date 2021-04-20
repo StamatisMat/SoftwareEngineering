@@ -62,7 +62,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePlay" style="-fx-background-color: transparent;" textAlignment="CENTER">
+                        <Button fx:id="playbutton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePlay" style="-fx-background-color: transparent;" textAlignment="CENTER">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -91,6 +91,15 @@
                               <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/stop.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="pausebutton" alignment="CENTER" contentDisplay="CENTER" disable="true" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePause" style="-fx-background-color: transparent;" textAlignment="CENTER" visible="false">
+                           <graphic>
+                              <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pause.png" />
                                  </image>
                               </ImageView>
                            </graphic>

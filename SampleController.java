@@ -1,11 +1,13 @@
 package application;
 
+
 import java.io.File;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -39,19 +41,60 @@ public class SampleController {
 	@FXML
 	ListView lista;
 	
+	@FXML
+	Button pausebutton;
+	
+	@FXML
+	Button playbutton;
+	
+	
+    private void setPauseButton(boolean var) {
+        playbutton.setDisable(var);
+        playbutton.setVisible(!var);
+        pausebutton.setDisable(!var);
+        pausebutton.setVisible(var);
+        
+    }
+	
+	
 
 	@FXML
 	private void handlePlay() {
-		if(speechThread.isAlive()){
-			handleStop();
-			speechThread.stop();
-			System.out.println("Eimai edw");
-		}
+		setPauseButton(true);
     	System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-
         //String text = "Voice check!";
-    	String text = textArea.getSelectedText();
-    	lista.getItems().add(textArea.getSelectedText());
+    	
+    	String temp_text = textArea.getSelectedText();
+    	if(temp_text.equals("")) {
+            temp_text = textArea.getText();
+            System.out.println(temp_text);
+            if(temp_text.equals("")) {
+                setPauseButton(false);
+                return;
+            }
+            
+        }
+    	
+    	int listsize=lista.getItems().size();
+    	System.out.println(temp_text);
+    	if(listsize>0) {
+    		if(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals("")) {
+    			System.out.println(temp_text);
+    			handleContinue();
+    			return;
+    		}
+  
+    	}
+    	
+		if(speechThread.isAlive()){ 
+			 handleStop();
+			 speechThread.stop();
+			 System.out.println("Eimai edw");
+		}
+		
+		final String text =temp_text;
+	
+    	lista.getItems().add(temp_text);
         VoiceManager voiceManager = VoiceManager.getInstance();
         voice = voiceManager.getVoice("kevin");
         voice.setPitch(150.0f);
@@ -62,6 +105,7 @@ public class SampleController {
         speechThread = new Thread(new Runnable() {
             public void run() {
                 voice.speak(text);
+                setPauseButton(false);
                
             }
         });
@@ -75,31 +119,34 @@ public class SampleController {
 	private void handleSpeedup() {
 		speed+=10;
 		System.out.println(speed);
-	}
-	
-	@FXML
-	private void handleStop() {
-		audioplayer=voice.getAudioPlayer();
-        audioplayer.cancel();
-	}
+	}//End handle
 	
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
 		System.out.println(speed);
-	}
+	}//End handleSpeeddown
+	
+	@FXML
+	private void handleStop() {
+		setPauseButton(false);
+		audioplayer=voice.getAudioPlayer();
+        audioplayer.cancel();
+	}//End handleStop
 	
 	@FXML
 	private void handleContinue() {
+		setPauseButton(true);
 		audioplayer=voice.getAudioPlayer();
         audioplayer.resume();
-	}
+	}//End handleContinue
 	
 	@FXML
 	private void handlePause() {
+		setPauseButton(false);
 		audioplayer=voice.getAudioPlayer();
         audioplayer.pause();
-	}
+	}//End handlePause
 	
 	@FXML
 	private void handleExit() {
