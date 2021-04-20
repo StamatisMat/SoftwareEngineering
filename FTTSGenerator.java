@@ -10,6 +10,10 @@ public class FTTSGenerator {
 	SampleController samplecontroller;
 	public FTTSGenerator(SampleController samplecontroller) {
 	   this.samplecontroller=samplecontroller;
+		 //speechThread = new Thread(new Runnable() {
+	     //    public void run() {            
+	     //    }
+	     //});
 	}
 	public void generateFTTS(String text,float speed,float pitch) {
 		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
@@ -47,8 +51,7 @@ public class FTTSGenerator {
 		voice.getAudioPlayer().cancel();
 	}
 	
-	public void fttsStopRunningThread() {
-		
+	public void fttsStopRunningThread() {	
 		if(speechThread != null) {
 			if(speechThread.isAlive()){ 
 				fttsStop();

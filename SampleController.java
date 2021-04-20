@@ -15,7 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import com.sun.speech.freetts.Voice;
-import com.sun.speech.freetts.VoiceManager;
 import com.sun.speech.freetts.audio.AudioPlayer;
 
 
@@ -24,15 +23,10 @@ public class SampleController {
 
 	ArrayList<File> recentfiles = new ArrayList<File>();
 	float speed=130.0f;
-	 Voice voice;
-	 AudioPlayer audioplayer;
-	 boolean isPlaying=false;
-	 FTTSGenerator ftts = new FTTSGenerator(this);
-	 Thread speechThread = new Thread(new Runnable() {
-         public void run() {            
-         }
-     });
-	
+	Voice voice;
+	AudioPlayer audioplayer;
+	boolean isPlaying=false;
+	FTTSGenerator ftts = new FTTSGenerator(this);
 	
 	@FXML
 	TextArea textArea;
@@ -60,9 +54,7 @@ public class SampleController {
 	@FXML
 	private void handlePlay() {
 		setPauseButton(true);
-    	
-        //String text = "Voice check!";
-    	
+
     	String temp_text = textArea.getSelectedText();
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
@@ -82,7 +74,6 @@ public class SampleController {
     			handleContinue();
     			return;
     		}
-  
     	}
     	
     	ftts.fttsStopRunningThread();
@@ -90,10 +81,7 @@ public class SampleController {
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
     	
-    	
-    	ftts.generateFTTS(text, 150.0f, speed);
-    	
-        
+    	ftts.generateFTTS(text,speed, 150.0f);
 	}// end handlePlay
 	
 	
