@@ -27,6 +27,7 @@ public class SampleController {
 	 Voice voice;
 	 AudioPlayer audioplayer;
 	 boolean isPlaying=false;
+	 FTTSGenerator ftts = new FTTSGenerator(this);
 	 Thread speechThread = new Thread(new Runnable() {
          public void run() {            
          }
@@ -49,7 +50,7 @@ public class SampleController {
 	Button playbutton;
 	
 	
-    private void setPauseButton(boolean var) {
+    public void setPauseButton(boolean var) {
         playbutton.setDisable(var);
         playbutton.setVisible(!var);
         pausebutton.setDisable(!var);
@@ -59,7 +60,7 @@ public class SampleController {
 	@FXML
 	private void handlePlay() {
 		setPauseButton(true);
-    	System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+    	
         //String text = "Voice check!";
     	
     	String temp_text = textArea.getSelectedText();
@@ -69,8 +70,7 @@ public class SampleController {
             if(temp_text.equals("")) {
                 setPauseButton(false);
                 return;
-            }
-            
+            }   
         }
     	
     	int listsize=lista.getItems().size();
@@ -85,34 +85,14 @@ public class SampleController {
   
     	}
     	
-		if(speechThread.isAlive()){ 
-			
-			audioplayer=voice.getAudioPlayer();
-	        audioplayer.cancel();
-			speechThread.stop();
-			System.out.println("Eimai edw");
-		}
+    	ftts.fttsStopRunningThread();
 		
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
-        VoiceManager voiceManager = VoiceManager.getInstance();
-        voice = voiceManager.getVoice("kevin");
-        voice.setPitch(150.0f);
-        voice.setRate(speed);
-        voice.allocate();
-        //voice.speak(text);
-        //voice.speak(text);
-        speechThread = new Thread(new Runnable() {
-            public void run() {
-            	isPlaying=true;
-                voice.speak(text);
-                
-                setPauseButton(false);
-                isPlaying=false;
-            }
-        });
-        speechThread.setDaemon(true);//kill all threads after main window close
-        speechThread.start();
+    	
+    	
+    	ftts.generateFTTS(text, 150.0f, speed);
+    	
         
 	}// end handlePlay
 	
@@ -133,23 +113,19 @@ public class SampleController {
 	private void handleStop() {
 		setPauseButton(false);
 		isPlaying=false;
-		speechThread.stop();
-		audioplayer=voice.getAudioPlayer();
-        audioplayer.cancel();
+		ftts.fttsStop();
 	}//End handleStop
 	
 	@FXML
 	private void handleContinue() {
 		setPauseButton(true);
-		audioplayer=voice.getAudioPlayer();
-        audioplayer.resume();
+		ftts.fttsContinue();
 	}//End handleContinue
 	
 	@FXML
 	private void handlePause() {
 		setPauseButton(false);
-		audioplayer=voice.getAudioPlayer();
-        audioplayer.pause();
+		ftts.fttsPause();
 	}//End handlePause
 	
 	@FXML
