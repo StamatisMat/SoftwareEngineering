@@ -43,7 +43,8 @@ public class SampleController {
 	@FXML
 	private void handlePlay() {
 		if(speechThread.isAlive()){
-			//speechThread.stop();
+			handleStop();
+			speechThread.stop();
 			System.out.println("Eimai edw");
 		}
     	System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
