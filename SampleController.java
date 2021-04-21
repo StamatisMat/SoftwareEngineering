@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -22,7 +23,7 @@ import com.sun.speech.freetts.audio.AudioPlayer;
 public class SampleController {
 
 	ArrayList<File> recentfiles = new ArrayList<File>();
-	float speed=130.0f;
+	float speed=120.0f;
 	Voice voice;
 	AudioPlayer audioplayer;
 	boolean isPlaying=false;
@@ -76,14 +77,27 @@ public class SampleController {
     		}
     	}
     	
+    	int index = lista.getSelectionModel().getSelectedIndex();
+    	if(index!=-1) {
+    		temp_text=(String) lista.getSelectionModel().getSelectedItem();
+    		lista.getSelectionModel().clearSelection(index);
+    	}
+    	
+    	
     	ftts.fttsStopRunningThread();
 		
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
     	
-    	ftts.generateFTTS(text,speed, 150.0f);
+    	ftts.generateFTTS(text,speed, 130.0f);
 	}// end handlePlay
 	
+	@FXML
+    public void handleListPlayer(MouseEvent click) {	 
+        if (click.getClickCount() == 2) {
+        	handlePlay();
+        }
+    }
 	
 	@FXML
 	private void handleSpeedup() {
