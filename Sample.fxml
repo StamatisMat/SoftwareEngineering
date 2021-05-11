@@ -51,7 +51,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleLoad" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="SavaAs" />
-                  <MenuItem mnemonicParsing="false" text="Recent Files" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleRecentFiles" text="Recent Files" />
                   <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close" />
             </items>
           </Menu>

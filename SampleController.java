@@ -5,11 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -168,8 +171,44 @@ public class SampleController {
 	}
 	
 	@FXML
-	private void handleRecentFiles(File file) {
-		System.exit(0);
+	private void handleRecentFiles() {
+		String fileextension;
+		ArrayList<String> choices = new ArrayList<>();
+		for(File file: recentfiles){
+			try {
+				if(!choices.contains(file.getCanonicalPath())) {
+					choices.add(0,file.getCanonicalPath());
+				}	
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(choices.isEmpty()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Recent Files Warning");
+			alert.setContentText("Íot recently found records");
+
+			alert.showAndWait();
+			return;
+		}
+		
+		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+		dialog.setTitle("Recent Files");
+		dialog.setHeaderText("Open recent file");
+		dialog.setContentText("Choose your file:");
+
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		if(!result.isPresent()) {
+			return;
+		}
+		openfile=new File(result.get());
+		fileextension = getFileExtension(openfile);
+		LoadData(fileextension);
+		
 	}// end handleRecentFiles
     
 	@FXML
