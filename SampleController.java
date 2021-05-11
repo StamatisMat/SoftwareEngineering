@@ -175,7 +175,6 @@ public class SampleController {
 	@FXML
 	private void handleLoad() {
 		String fileextension = "";
-		ArrayList<String> data = new ArrayList<String>();
 		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Pick a file");
@@ -190,6 +189,73 @@ public class SampleController {
 		if (openfile == null) return;
 		
 		fileextension = getFileExtension(openfile);
+		LoadData(fileextension);
+	}// end handleLoad
+	
+	
+    @FXML
+    private void handleSaveAs() {
+    	String fileextension = "";
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"),
+                new FileChooser.ExtensionFilter("Word-2003", "*.doc"),
+                new FileChooser.ExtensionFilter("Word", "*.docx"),
+                new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
+                new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
+                new FileChooser.ExtensionFilter("Text", "*.txt"));
+        openfile = fileChooser.showSaveDialog(new Stage());
+        
+        if(openfile==null) return;
+
+        try {
+            FileWriter fileWriter = new FileWriter(openfile);
+            fileWriter.write(textArea.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        fileextension = getFileExtension(openfile);
+		LoadData(fileextension);
+    }// end handleLoad
+    
+    @FXML
+    private void handleSave() {
+    	String fileextension;
+    	
+    	if(openfile==null) {
+    		handleSaveAs();
+    		System.out.println(openfile);
+    		fileextension = getFileExtension(openfile);
+    		
+    		LoadData(fileextension);
+    	}
+    	else {
+            try {
+                FileWriter fileWriter = new FileWriter(openfile);
+                fileWriter.write(textArea.getText());
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    	}
+    }// end handleLoad
+
+
+
+	private static String getFileExtension(File file) {
+		String fileName = file.getName();
+		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+			return fileName.substring(fileName.lastIndexOf(".") + 1);
+		else
+			return "";
+	}
+	
+	private void LoadData(String fileextension) {
+		ArrayList<String> data = new ArrayList<String>();
+		
 		if (fileextension.equals("doc") || fileextension.equals("docx")) {
 			WordReader wordfile = new WordReader();
 			data = wordfile.fileReader(openfile);
@@ -211,54 +277,5 @@ public class SampleController {
 		for (int i = 0; i < data.size(); i++) {
 			textArea.appendText(data.get(i));
 		}
-	}// end handleLoad
-	
-	
-    @FXML
-    private void handleSaveAs() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save File");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"),
-                new FileChooser.ExtensionFilter("Word-2003", "*.doc"),
-                new FileChooser.ExtensionFilter("Word", "*.docx"),
-                new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
-                new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
-                new FileChooser.ExtensionFilter("Text", "*.txt"));
-        File savefile = fileChooser.showSaveDialog(new Stage());
-        
-        if(savefile==null) return;
-        
-        try {
-            FileWriter fileWriter = new FileWriter(savefile);
-            fileWriter.write(textArea.getText());
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }// end handleLoad
-    
-    @FXML
-    private void handleSave() {
-        try {
-            FileWriter fileWriter = new FileWriter(openfile);
-            fileWriter.write(textArea.getText());
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }// end handleLoad
-
-
-
-	private static String getFileExtension(File file) {
-		String fileName = file.getName();
-		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-			return fileName.substring(fileName.lastIndexOf(".") + 1);
-		else
-			return "";
 	}
-	
-
 }
-
