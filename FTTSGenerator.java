@@ -10,18 +10,20 @@ public class FTTSGenerator {
 	SampleController samplecontroller;
 	public FTTSGenerator(SampleController samplecontroller) {
 	   this.samplecontroller=samplecontroller;
+	   System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+       VoiceManager voiceManager = VoiceManager.getInstance();
+       voice = voiceManager.getVoice("kevin16");
+       voice.allocate();
 		 //speechThread = new Thread(new Runnable() {
 	     //    public void run() {            
 	     //    }
 	     //});
 	}
 	public void generateFTTS(final String text,float speed,float pitch) {
-		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-        VoiceManager voiceManager = VoiceManager.getInstance();
-        voice = voiceManager.getVoice("kevin16");
-        voice.setPitch(pitch);
-        voice.setRate(speed);
-        voice.allocate();
+	    
+		voice.setPitch(pitch);
+	    voice.setRate(speed);
+	    
         speechThread = new Thread(new Runnable() {
             public void run() {
             	samplecontroller.isPlaying = true;
@@ -46,6 +48,11 @@ public class FTTSGenerator {
 		return voice.getAudioPlayer();
 	}
 	
+	public void fttsHandleVolume(float volume) {
+		//System.out.println("hello from ftts: "+volume);
+		voice.setVolume(volume);	
+	}
+	
 	public void fttsStop() {
 		speechThread.stop();
 		voice.getAudioPlayer().cancel();
@@ -58,6 +65,7 @@ public class FTTSGenerator {
 			}
 		}
 	}
+	
 	
 	public void fttsContinue() {
 		voice.getAudioPlayer().resume();

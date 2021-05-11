@@ -2,6 +2,8 @@ package application;
 
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
@@ -10,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -21,11 +24,13 @@ import com.sun.speech.freetts.audio.AudioPlayer;
 
 
 public class SampleController {
-
+	
+	File openfile;
 	ArrayList<File> recentfiles = new ArrayList<File>();
 	float speed=120.0f;
 	Voice voice;
 	AudioPlayer audioplayer;
+	VolumeControl volumeController;
 	boolean isPlaying=false;
 	FTTSGenerator ftts = new FTTSGenerator(this);
 	
@@ -43,6 +48,13 @@ public class SampleController {
 	
 	@FXML
 	Button playbutton;
+	
+	@FXML
+	Slider volumeID;
+	
+	@FXML
+	Slider pitchID;
+	
 	
 	
     public void setPauseButton(boolean var) {
@@ -88,8 +100,9 @@ public class SampleController {
 		
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
-    	
-    	ftts.generateFTTS(text,speed, 130.0f);
+    	//System.out.println("Volume: "+volumeID.getValue());
+    	float pitch = 120.0f + (float) pitchID.getValue();
+    	ftts.generateFTTS(text,speed, pitch);
 	}// end handlePlay
 	
 	@FXML
@@ -131,6 +144,14 @@ public class SampleController {
 	}//End handlePause
 	
 	@FXML
+	private void handleVolume() {
+		//System.out.println("VOLUMEEEE: "+volumeID.getValue());
+		ftts.fttsHandleVolume((float) volumeID.getValue()/100);
+		//volumeController.setVolume((float) volumeID.getValue()/100);
+		
+	}
+	
+	@FXML
 	private void handleExit() {
 		System.exit(0);
 	}// end handleExit
@@ -165,31 +186,70 @@ public class SampleController {
 				new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
 				new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
 				new FileChooser.ExtensionFilter("Text", "*.txt"));
-		File file = fileChooser.showOpenDialog(new Stage());
+		openfile = fileChooser.showOpenDialog(new Stage());
+		if (openfile == null) return;
 		
-		fileextension = getFileExtension(file);
+		fileextension = getFileExtension(openfile);
 		if (fileextension.equals("doc") || fileextension.equals("docx")) {
 			WordReader wordfile = new WordReader();
-			data = wordfile.fileReader(file);
+			data = wordfile.fileReader(openfile);
 		}
 		
 		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
 			ExcelReader wordfile = new ExcelReader();
-			data = wordfile.fileReader(file);
+			data = wordfile.fileReader(openfile);
 		}
 		
 		else if (fileextension.equals("txt")) {
 			TxtReader txtfile = new TxtReader();
-			data = txtfile.fileReader(file);
+			data = txtfile.fileReader(openfile);
 		}
 		
 		textArea.clear();
-		filename.setText(file.getName());
-		recentfiles.add(file);
+		filename.setText(openfile.getName());
+		recentfiles.add(openfile);
 		for (int i = 0; i < data.size(); i++) {
 			textArea.appendText(data.get(i));
 		}
 	}// end handleLoad
+	
+	
+    @FXML
+    private void handleSaveAs() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Files", "*.*"),
+                new FileChooser.ExtensionFilter("Word-2003", "*.doc"),
+                new FileChooser.ExtensionFilter("Word", "*.docx"),
+                new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
+                new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
+                new FileChooser.ExtensionFilter("Text", "*.txt"));
+        File savefile = fileChooser.showSaveDialog(new Stage());
+        
+        if(savefile==null) return;
+        
+        try {
+            FileWriter fileWriter = new FileWriter(savefile);
+            fileWriter.write(textArea.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }// end handleLoad
+    
+    @FXML
+    private void handleSave() {
+        try {
+            FileWriter fileWriter = new FileWriter(openfile);
+            fileWriter.write(textArea.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }// end handleLoad
+
+
 
 	private static String getFileExtension(File file) {
 		String fileName = file.getName();
@@ -197,7 +257,8 @@ public class SampleController {
 			return fileName.substring(fileName.lastIndexOf(".") + 1);
 		else
 			return "";
-	}	 
+	}
+	
 
 }
 
