@@ -69,6 +69,7 @@ public class SampleController {
 	
 	@FXML
 	private void handlePlay() {
+		SaveData(textArea.getText());
 		setPauseButton(true);
 
     	String temp_text = textArea.getSelectedText();
@@ -113,13 +114,13 @@ public class SampleController {
         if (click.getClickCount() == 2) {
         	handlePlay();
         }
-    }
+    }//End handleListPlayer
 	
 	@FXML
 	private void handleSpeedup() {
 		speed+=10;
 		//System.out.println(speed);
-	}//End handle
+	}//End handleSpeedup
 	
 	@FXML
 	private void handleSpeeddown() {
@@ -168,11 +169,10 @@ public class SampleController {
 		alert.setHeaderText("Software Engineering Project");
 		alert.getDialogPane().setContent(label);
 		alert.showAndWait();
-	}
+	}// end handleAbout
 	
 	@FXML
 	private void handleRecentFiles() {
-		String fileextension;
 		ArrayList<String> choices = new ArrayList<>();
 		for(File file: recentfiles){
 			try {
@@ -200,21 +200,18 @@ public class SampleController {
 		dialog.setHeaderText("Open recent file");
 		dialog.setContentText("Choose your file:");
 
-		// Traditional way to get the response value.
 		Optional<String> result = dialog.showAndWait();
 		if(!result.isPresent()) {
 			return;
 		}
 		openfile=new File(result.get());
-		fileextension = getFileExtension(openfile);
-		LoadData(fileextension);
+		
+		LoadData();
 		
 	}// end handleRecentFiles
     
 	@FXML
-	private void handleLoad() {
-		String fileextension = "";
-		
+	private void handleLoad() {		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Pick a file");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -226,15 +223,13 @@ public class SampleController {
 				new FileChooser.ExtensionFilter("Text", "*.txt"));
 		openfile = fileChooser.showOpenDialog(new Stage());
 		if (openfile == null) return;
-		
-		fileextension = getFileExtension(openfile);
-		LoadData(fileextension);
+
+		LoadData();
 	}// end handleLoad
 	
 	
     @FXML
     private void handleSaveAs() {
-    	String fileextension = "";
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -248,6 +243,8 @@ public class SampleController {
         
         if(openfile==null) return;
 
+        
+        //TODO 
         try {
             FileWriter fileWriter = new FileWriter(openfile);
             fileWriter.write(textArea.getText());
@@ -256,22 +253,17 @@ public class SampleController {
             e.printStackTrace();
         }
         
-        fileextension = getFileExtension(openfile);
-		LoadData(fileextension);
-    }// end handleLoad
+		LoadData();
+    }// end handleSaveAs
     
     @FXML
     private void handleSave() {
-    	String fileextension;
-    	
     	if(openfile==null) {
     		handleSaveAs();
-    		System.out.println(openfile);
-    		fileextension = getFileExtension(openfile);
-    		
-    		LoadData(fileextension);
+    		LoadData();	
     	}
     	else {
+    		//TODO 
             try {
                 FileWriter fileWriter = new FileWriter(openfile);
                 fileWriter.write(textArea.getText());
@@ -280,9 +272,7 @@ public class SampleController {
                 e.printStackTrace();
             }
     	}
-    }// end handleLoad
-
-
+    }// end handleSave
 
 	private static String getFileExtension(File file) {
 		String fileName = file.getName();
@@ -292,7 +282,10 @@ public class SampleController {
 			return "";
 	}
 	
-	private void LoadData(String fileextension) {
+	//TODO
+	private void LoadData() {
+		String fileextension = getFileExtension(openfile);
+		
 		ArrayList<String> data = new ArrayList<String>();
 		
 		if (fileextension.equals("doc") || fileextension.equals("docx")) {
@@ -315,6 +308,16 @@ public class SampleController {
 		recentfiles.add(openfile);
 		for (int i = 0; i < data.size(); i++) {
 			textArea.appendText(data.get(i));
+		}
+	}
+	
+	//TODO
+	private void SaveData(String text) {
+		WordSaver wordfile = new WordSaver();
+		try {
+			wordfile.SaveWordfile(text,openfile);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
