@@ -313,9 +313,11 @@ public class SampleController {
 	
 	//TODO
 	private void SaveData(String text) {
-		WordSaver wordfile = new WordSaver();
+		//WordSaver wordfile = new WordSaver();
+		ExcelSaver excelfile = new ExcelSaver();
 		try {
-			wordfile.SaveWordfile(text,openfile);
+			//wordfile.SaveWordfile(text,openfile);
+			excelfile.SaveExcelfile(text,openfile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
