@@ -69,7 +69,14 @@ public class SampleController {
 	
 	@FXML
 	private void handlePlay() {
-		SaveData(textArea.getText());
+		//TODO just for testing
+		Atbash atb = new Atbash();
+		atb.atbash_encoding("Dokimastiko Sthn Grammh 74 tou SampleController");
+		atb.atbash_encoding("Wlprnzhgrpl Hgsm Tiznns 74 glf HznkovXlmgiloovi");
+		
+		//TODO just for testing
+		//SaveData(textArea.getText());
+		
 		setPauseButton(true);
 
     	String temp_text = textArea.getSelectedText();
