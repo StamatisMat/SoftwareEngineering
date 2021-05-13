@@ -70,9 +70,14 @@ public class SampleController {
 	@FXML
 	private void handlePlay() {
 		//TODO just for testing
-		Atbash atb = new Atbash();
-		atb.atbash_encoding("Dokimastiko Sthn Grammh 74 tou SampleController");
-		atb.atbash_encoding("Wlprnzhgrpl Hgsm Tiznns 74 glf HznkovXlmgiloovi");
+		Rot rot = new Rot();
+		rot.rot_encoding("Dokimastiko Sthn Grammh 74 tou SampleController");
+		rot.rot_encoding("Qbxvznfgvxb Fgua Tenzzu 75 gbh FnzcyrPbagebyyre");
+		
+		//TODO just for testing
+		//Atbash atb = new Atbash();
+		//atb.atbash_encoding("Dokimastiko Sthn Grammh 79 tou SampleController");
+		//atb.atbash_encoding("Wlprnzhgrpl Hgsm Tiznns 80 glf HznkovXlmgiloovi");
 		
 		//TODO just for testing
 		//SaveData(textArea.getText());
