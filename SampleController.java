@@ -201,7 +201,7 @@ public class SampleController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Recent Files Warning");
-			alert.setContentText("Íot recently found records");
+			alert.setContentText("ï¿½ot recently found records");
 
 			alert.showAndWait();
 			return;
@@ -254,16 +254,40 @@ public class SampleController {
         openfile = fileChooser.showSaveDialog(new Stage());
         
         if(openfile==null) return;
-
         
-        //TODO 
-        try {
-            FileWriter fileWriter = new FileWriter(openfile);
-            fileWriter.write(textArea.getText());
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String fileextension = getFileExtension(openfile);
+        
+        if (fileextension.equals("doc") || fileextension.equals("docx")) {
+			WordSaver saver = new WordSaver();
+			try {
+				saver.SaveWordfile(textArea.getText(),openfile);
+			} catch (Exception e) {
+				System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
+			}
+			
+		}
+		
+		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
+			ExcelSaver saver = new ExcelSaver();
+			try {
+				saver.SaveExcelfile(textArea.getText(),openfile);
+			} catch (Exception e) {
+				System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
+			}
+
+		}
+		
+		else if (fileextension.equals("txt")) {
+			//TxtReader file = new TxtReader();
+			 try {
+		            FileWriter fileWriter = new FileWriter(openfile);
+		            fileWriter.write(textArea.getText());
+		            fileWriter.close();
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		}
+       
         
 		LoadData();
     }// end handleSaveAs
@@ -275,14 +299,39 @@ public class SampleController {
     		LoadData();	
     	}
     	else {
-    		//TODO 
-            try {
-                FileWriter fileWriter = new FileWriter(openfile);
-                fileWriter.write(textArea.getText());
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    		 String fileextension = getFileExtension(openfile);
+    		 
+    		 //Might Need to check for file replacement
+    		 if (fileextension.equals("doc") || fileextension.equals("docx")) {
+    				WordSaver saver = new WordSaver();
+    				try {
+    					saver.SaveWordfile(textArea.getText(),openfile);
+    				} catch (Exception e) {
+    					System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
+    				}
+    				
+    			}
+    			
+    			else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
+    				ExcelSaver saver = new ExcelSaver();
+    				try {
+    					saver.SaveExcelfile(textArea.getText(),openfile);
+    				} catch (Exception e) {
+    					System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
+    				}
+
+    			}
+    			
+    			else if (fileextension.equals("txt")) {
+    				//TxtReader file = new TxtReader();
+    				 try {
+    			            FileWriter fileWriter = new FileWriter(openfile);
+    			            fileWriter.write(textArea.getText());
+    			            fileWriter.close();
+    			        } catch (IOException e) {
+    			            e.printStackTrace();
+    			        }
+    			}
     	}
     }// end handleSave
 
