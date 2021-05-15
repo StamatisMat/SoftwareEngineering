@@ -16,7 +16,6 @@ public class Rot extends Encoding{
 				encoded_text+=character;
 			}
 		}
-		//System.out.println(encoded_text);
 		return encoded_text;
 	}
 }

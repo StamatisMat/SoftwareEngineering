@@ -60,7 +60,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handlePlay" text="Play" />
                   <MenuItem mnemonicParsing="false" onAction="#handlePause" text="Pause" />
                   <MenuItem mnemonicParsing="false" onAction="#handleStop" text="Stop" />
-                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleClear" text="Clear" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Encoding">
@@ -165,6 +165,23 @@
                         </ImageView>
                      </graphic>
                   </Button>
+               </children>
+            </GridPane>
+            <GridPane GridPane.columnIndex="1">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Play/Pause" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Slow" GridPane.columnIndex="1" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Stop" GridPane.columnIndex="2" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Fast" GridPane.columnIndex="3" />
                </children>
             </GridPane>
          </children>

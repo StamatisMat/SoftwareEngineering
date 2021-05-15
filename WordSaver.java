@@ -8,10 +8,10 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 public class WordSaver {
 	XWPFRun run;
-	//TODO chech if file exists
-	public void SaveWordfile(String text,File openfile) throws Exception { 
+	
+	public void SaveWordfile(String text,File file) throws Exception { 
 		XWPFDocument document = new XWPFDocument();
-		FileOutputStream out = new FileOutputStream (openfile);
+		FileOutputStream out = new FileOutputStream (file);
       
 		XWPFParagraph paragraph = document.createParagraph();
 		

@@ -155,12 +155,17 @@ public class SampleController {
 	@FXML
 	private void handleVolume() {
 		ftts.fttsHandleVolume((float) volumeID.getValue()/100);
-	}
+	}//End handleVolume
 	
 	@FXML
 	private void handleExit() {
 		System.exit(0);
 	}// end handleExit
+	
+	@FXML
+	private void handleClear() {
+		lista.getItems().clear();
+	}// end handleClear
 	
 	@FXML
 	private void handleAbout() {
@@ -176,6 +181,7 @@ public class SampleController {
 	@FXML
 	private void handleRecentFiles() {
 		ArrayList<String> choices = new ArrayList<>();
+		File prevfile=openfile;
 		for(File file: recentfiles){
 			try {
 				if(!choices.contains(file.getCanonicalPath())) {
@@ -191,7 +197,7 @@ public class SampleController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Recent Files Warning");
-			alert.setContentText("Not recently found records");
+			alert.setContentText("No records found!");
 
 			alert.showAndWait();
 			return;
@@ -207,7 +213,16 @@ public class SampleController {
 			return;
 		}
 		openfile=new File(result.get());
-		
+		if(!openfile.isFile()) {
+			recentfiles.remove(openfile);
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning Dialog");
+			alert.setHeaderText("Recent Files Warning");
+			alert.setContentText("File does not exist!");
+			alert.showAndWait();
+			openfile=prevfile;
+			return;
+		}
 		LoadData();
 		
 	}// end handleRecentFiles

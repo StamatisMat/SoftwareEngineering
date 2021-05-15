@@ -36,10 +36,11 @@ public class ExcelReader {
 		                case STRING:
 		                    data.add(cell.getStringCellValue());
 		                    break;						
-						/*
-						 * case BOOLEAN: System.out.print(cell.getBooleanCellValue());
-						 * data.add(cell.getBooleanCellValue()); break;
-						 */
+						
+						case BOOLEAN:
+							data.add(String.valueOf(cell.getBooleanCellValue()));
+						  	break;
+						 
 						case NUMERIC:
 							data.add(String.valueOf(cell.getNumericCellValue()));
 							break;
@@ -60,9 +61,9 @@ public class ExcelReader {
 	}
 	
 	
-	private Workbook getWorkbook(File inputFile)
+	private Workbook getWorkbook(File file)
 	        throws IOException {
-		String filepath=inputFile.getCanonicalPath();
+		String filepath=file.getCanonicalPath();
 		FileInputStream inputStream = new FileInputStream(new File(filepath));
 		Workbook workbook = null;
 		

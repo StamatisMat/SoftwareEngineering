@@ -14,11 +14,8 @@ public class Atbash extends Encoding{
 				encoded_text+=uppercase_alphabet.charAt(uppercase_alphabet.length()-uppercase_alphabet.indexOf(character)-1);
 			}else {
 				encoded_text+=character;
-			}
-			
-			
+			}	
 		}
-		System.out.println(encoded_text);
 		return encoded_text;
 	}
 }

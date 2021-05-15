@@ -28,8 +28,6 @@ public class WordReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-		
 		return data;
 	}
-
 }

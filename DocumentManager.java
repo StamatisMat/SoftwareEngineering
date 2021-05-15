@@ -7,13 +7,18 @@ import java.util.ArrayList;
 
 import javafx.scene.control.TextArea;
 
-//TODO
+
 public class DocumentManager {
 	public void saveDocument(File file, String text) {
-		String fileextension = getFileExtension(file);
-	
+		String filepath="";
+		
+		try {
+			filepath=file.getCanonicalPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		 //Might Need to check for file replacement
-		 if (fileextension.equals("doc") || fileextension.equals("docx")) {
+		 if (filepath.endsWith("doc") || filepath.endsWith("docx")) {
 				WordSaver saver = new WordSaver();
 				try {
 					saver.SaveWordfile(text,file);
@@ -23,18 +28,17 @@ public class DocumentManager {
 				
 			}
 			
-			else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
+			else if (filepath.endsWith("xls") || filepath.endsWith("xlsx")) {
 				ExcelSaver saver = new ExcelSaver();
 				try {
 					saver.SaveExcelfile(text,file);
 				} catch (Exception e) {
 					System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
 				}
-
+	
 			}
 			
 			else{
-				//TxtReader file = new TxtReader();
 				 try {
 			            FileWriter fileWriter = new FileWriter(file);
 			            fileWriter.write(text);
@@ -46,33 +50,31 @@ public class DocumentManager {
 	}
 	
 	public ArrayList<String> loadDocument(File file) {
-		String fileextension = getFileExtension(file);
+		String filepath="";
+		
+		try {
+			filepath=file.getCanonicalPath();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		ArrayList<String> data = new ArrayList<String>();
 		
-		if (fileextension.equals("doc") || fileextension.equals("docx")) {
+		if (filepath.endsWith("doc") || filepath.endsWith("docx")) {
 			WordReader wordfile = new WordReader();
 			data = wordfile.fileReader(file);
 		}
 		
-		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
+		else if (filepath.endsWith("xls") || filepath.endsWith("xlsx")) {
 			ExcelReader wordfile = new ExcelReader();
 			data = wordfile.fileReader(file);
 		}
 		
-		else if (fileextension.equals("txt")) {
+		else if (filepath.endsWith("txt")) {
 			TxtReader txtfile = new TxtReader();
 			data = txtfile.fileReader(file);
 		}
 		
 		return data;
-	}
-	
-	private String getFileExtension(File file) {
-		String fileName = file.getName();
-		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-			return fileName.substring(fileName.lastIndexOf(".") + 1);
-		else
-			return "";
 	}
 }
