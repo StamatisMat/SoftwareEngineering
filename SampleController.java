@@ -277,7 +277,7 @@ public class SampleController {
 
 		}
 		
-		else if (fileextension.equals("txt")) {
+		else {
 			//TxtReader file = new TxtReader();
 			 try {
 		            FileWriter fileWriter = new FileWriter(openfile);
@@ -322,7 +322,7 @@ public class SampleController {
 
     			}
     			
-    			else if (fileextension.equals("txt")) {
+    			else {
     				//TxtReader file = new TxtReader();
     				 try {
     			            FileWriter fileWriter = new FileWriter(openfile);
