@@ -245,7 +245,9 @@ public class SampleController {
         openfile = fileChooser.showSaveDialog(new Stage());    
         
         if(openfile==null) return;
+
         docmanager.saveDocument(openfile, textArea.getText());
+            
 		LoadData();
     }// end handleSaveAs
     
