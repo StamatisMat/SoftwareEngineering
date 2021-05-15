@@ -1,10 +1,8 @@
 package application;
 
-public class Atbash {
-	String lowercase_alphabet = "abcdefghijklmnopqrstuvwxyz";
-	String uppercase_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	
-	public String atbash_encoding(String text)
+public class Atbash extends Encoding{
+
+	public String encode(String text)
 	{
 		String encoded_text="";
 		String[] string_to_chars = text.split("");

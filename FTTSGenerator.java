@@ -50,7 +50,7 @@ public class FTTSGenerator {
 	
 	public void fttsHandleVolume(float volume) {
 		//System.out.println("hello from ftts: "+volume);
-		voice.setVolume(volume);	
+		voice.setVolume(volume);
 	}
 	
 	public void fttsStop() {

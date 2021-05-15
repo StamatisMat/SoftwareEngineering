@@ -63,6 +63,12 @@
                   <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Encoding">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleAtbash" text="Atbash" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleRot" text="Rot-13" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />

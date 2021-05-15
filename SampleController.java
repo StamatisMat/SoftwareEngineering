@@ -33,9 +33,9 @@ public class SampleController {
 	float speed=120.0f;
 	Voice voice;
 	AudioPlayer audioplayer;
-	VolumeControl volumeController;
 	boolean isPlaying=false;
 	FTTSGenerator ftts = new FTTSGenerator(this);
+	DocumentManager docmanager = new DocumentManager();
 	
 	@FXML
 	TextArea textArea;
@@ -68,26 +68,12 @@ public class SampleController {
     }
 	
 	@FXML
-	private void handlePlay() {
-		//TODO just for testing
-		Rot rot = new Rot();
-		rot.rot_encoding("Dokimastiko Sthn Grammh 74 tou SampleController");
-		rot.rot_encoding("Qbxvznfgvxb Fgua Tenzzu 75 gbh FnzcyrPbagebyyre");
-		
-		//TODO just for testing
-		//Atbash atb = new Atbash();
-		//atb.atbash_encoding("Dokimastiko Sthn Grammh 79 tou SampleController");
-		//atb.atbash_encoding("Wlprnzhgrpl Hgsm Tiznns 80 glf HznkovXlmgiloovi");
-		
-		//TODO just for testing
-		//SaveData(textArea.getText());
-		
+	private void handlePlay() {		
 		setPauseButton(true);
 
     	String temp_text = textArea.getSelectedText();
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
-            //System.out.println(temp_text);
             if(temp_text.equals("")) {
                 setPauseButton(false);
                 return;
@@ -95,11 +81,8 @@ public class SampleController {
         }
     	
     	int listsize=lista.getItems().size();
-    	//System.out.println(temp_text);
     	if(listsize>0) {
     		if(isPlaying&&(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals(""))) {
-    			//System.out.println(temp_text);
-    			//System.out.println("prepei na paw parakatw");
     			handleContinue();
     			return;
     		}
@@ -116,10 +99,22 @@ public class SampleController {
 		
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
-    	//System.out.println("Volume: "+volumeID.getValue());
     	float pitch = 120.0f + (float) pitchID.getValue();
     	ftts.generateFTTS(text,speed, pitch);
 	}// end handlePlay
+	
+	@FXML
+	public void handleRot() {
+		Encoding rot = new Rot();
+		textArea.setText(rot.encode(textArea.getText()));
+	}
+	
+	@FXML
+	public void handleAtbash() {
+		Encoding atbash = new Atbash();
+		textArea.setText(atbash.encode(textArea.getText()));
+	}
+	
 	
 	@FXML
     public void handleListPlayer(MouseEvent click) {	 
@@ -131,13 +126,11 @@ public class SampleController {
 	@FXML
 	private void handleSpeedup() {
 		speed+=10;
-		//System.out.println(speed);
 	}//End handleSpeedup
 	
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
-		//System.out.println(speed);
 	}//End handleSpeeddown
 	
 	@FXML
@@ -161,10 +154,7 @@ public class SampleController {
 	
 	@FXML
 	private void handleVolume() {
-		//System.out.println("VOLUMEEEE: "+volumeID.getValue());
 		ftts.fttsHandleVolume((float) volumeID.getValue()/100);
-		//volumeController.setVolume((float) volumeID.getValue()/100);
-		
 	}
 	
 	@FXML
@@ -192,7 +182,7 @@ public class SampleController {
 					choices.add(0,file.getCanonicalPath());
 				}	
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -201,7 +191,7 @@ public class SampleController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Recent Files Warning");
-			alert.setContentText("�ot recently found records");
+			alert.setContentText("Not recently found records");
 
 			alert.showAndWait();
 			return;
@@ -242,6 +232,7 @@ public class SampleController {
 	
     @FXML
     private void handleSaveAs() {
+		
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -251,44 +242,10 @@ public class SampleController {
                 new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
                 new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
                 new FileChooser.ExtensionFilter("Text", "*.txt"));
-        openfile = fileChooser.showSaveDialog(new Stage());
+        openfile = fileChooser.showSaveDialog(new Stage());    
         
         if(openfile==null) return;
-        
-        String fileextension = getFileExtension(openfile);
-        
-        if (fileextension.equals("doc") || fileextension.equals("docx")) {
-			WordSaver saver = new WordSaver();
-			try {
-				saver.SaveWordfile(textArea.getText(),openfile);
-			} catch (Exception e) {
-				System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
-			}
-			
-		}
-		
-		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
-			ExcelSaver saver = new ExcelSaver();
-			try {
-				saver.SaveExcelfile(textArea.getText(),openfile);
-			} catch (Exception e) {
-				System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
-			}
-
-		}
-		
-		else if (fileextension.equals("txt")) {
-			//TxtReader file = new TxtReader();
-			 try {
-		            FileWriter fileWriter = new FileWriter(openfile);
-		            fileWriter.write(textArea.getText());
-		            fileWriter.close();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-		}
-       
-        
+        docmanager.saveDocument(openfile, textArea.getText());
 		LoadData();
     }// end handleSaveAs
     
@@ -299,88 +256,20 @@ public class SampleController {
     		LoadData();	
     	}
     	else {
-    		 String fileextension = getFileExtension(openfile);
-    		 
-    		 //Might Need to check for file replacement
-    		 if (fileextension.equals("doc") || fileextension.equals("docx")) {
-    				WordSaver saver = new WordSaver();
-    				try {
-    					saver.SaveWordfile(textArea.getText(),openfile);
-    				} catch (Exception e) {
-    					System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
-    				}
-    				
-    			}
-    			
-    			else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
-    				ExcelSaver saver = new ExcelSaver();
-    				try {
-    					saver.SaveExcelfile(textArea.getText(),openfile);
-    				} catch (Exception e) {
-    					System.err.println("Error in Saving Word file: "+e.getLocalizedMessage());
-    				}
-
-    			}
-    			
-    			else if (fileextension.equals("txt")) {
-    				//TxtReader file = new TxtReader();
-    				 try {
-    			            FileWriter fileWriter = new FileWriter(openfile);
-    			            fileWriter.write(textArea.getText());
-    			            fileWriter.close();
-    			        } catch (IOException e) {
-    			            e.printStackTrace();
-    			        }
-    			}
+    		docmanager.saveDocument(openfile, textArea.getText());
     	}
     }// end handleSave
-
-	private static String getFileExtension(File file) {
-		String fileName = file.getName();
-		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-			return fileName.substring(fileName.lastIndexOf(".") + 1);
-		else
-			return "";
-	}
 	
 	//TODO
 	private void LoadData() {
-		String fileextension = getFileExtension(openfile);
-		
-		ArrayList<String> data = new ArrayList<String>();
-		
-		if (fileextension.equals("doc") || fileextension.equals("docx")) {
-			WordReader wordfile = new WordReader();
-			data = wordfile.fileReader(openfile);
-		}
-		
-		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
-			ExcelReader wordfile = new ExcelReader();
-			data = wordfile.fileReader(openfile);
-		}
-		
-		else if (fileextension.equals("txt")) {
-			TxtReader txtfile = new TxtReader();
-			data = txtfile.fileReader(openfile);
-		}
-		
-		textArea.clear();
+		ArrayList<String> data= new ArrayList <String>();
+		data = docmanager.loadDocument(openfile);
 		filename.setText(openfile.getName());
 		recentfiles.add(openfile);
+		textArea.clear();
 		for (int i = 0; i < data.size(); i++) {
 			textArea.appendText(data.get(i));
-		}
+		}	
 	}
 	
-	//TODO
-	private void SaveData(String text) {
-		//WordSaver wordfile = new WordSaver();
-		ExcelSaver excelfile = new ExcelSaver();
-		try {
-			//wordfile.SaveWordfile(text,openfile);
-			excelfile.SaveExcelfile(text,openfile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
