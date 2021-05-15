@@ -55,6 +55,9 @@ public class FTTSGenerator {
 	
 	public void fttsStop() {
 		speechThread.stop();
+		if(samplecontroller.isPlaying) {
+			voice.getAudioPlayer().resume(); //We Resume to avoid keeping the pause for the next hearing
+		}
 		voice.getAudioPlayer().cancel();
 	}
 	

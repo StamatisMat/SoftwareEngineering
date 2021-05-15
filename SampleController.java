@@ -70,7 +70,7 @@ public class SampleController {
 	@FXML
 	private void handlePlay() {		
 		setPauseButton(true);
-
+		
     	String temp_text = textArea.getSelectedText();
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
@@ -136,8 +136,8 @@ public class SampleController {
 	@FXML
 	private void handleStop() {
 		setPauseButton(false);
+		ftts.fttsStop();		
 		isPlaying=false;
-		ftts.fttsStop();
 	}//End handleStop
 	
 	@FXML
