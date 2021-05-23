@@ -274,6 +274,7 @@ public class SampleController {
     private void handleSave() {
     	if(openfile==null) {
     		handleSaveAs();
+    		if(openfile==null) return;
     		LoadData();	
     	}
     	else {
