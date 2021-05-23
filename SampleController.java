@@ -36,7 +36,7 @@ public class SampleController {
 	boolean isPlaying=false;
 	FTTSGenerator ftts = new FTTSGenerator(this);
 	DocumentManager docmanager = new DocumentManager();
-	
+
 	@FXML
 	TextArea textArea;
 
@@ -58,6 +58,8 @@ public class SampleController {
 	@FXML
 	Slider pitchID;
 	
+	@FXML 
+	Label speedID;
 	
 	
     public void setPauseButton(boolean var) {
@@ -126,11 +128,13 @@ public class SampleController {
 	@FXML
 	private void handleSpeedup() {
 		speed+=10;
+		setSpeedOnLabels();
 	}//End handleSpeedup
 	
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
+		setSpeedOnLabels();
 	}//End handleSpeeddown
 	
 	@FXML
@@ -287,6 +291,11 @@ public class SampleController {
 		for (int i = 0; i < data.size(); i++) {
 			textArea.appendText(data.get(i));
 		}	
+	}
+	
+	private void setSpeedOnLabels() {
+		String text="Speed = "+speed;
+		speedID.setText(text);
 	}
 	
 }

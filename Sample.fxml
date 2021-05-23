@@ -104,10 +104,12 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeeddown" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="1">
+                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeeddown" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -122,7 +124,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="playbutton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePlay" style="-fx-background-color: transparent;" textAlignment="CENTER">
+                  <Button fx:id="playbutton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePlay" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.rowIndex="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -134,7 +136,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeedup" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="3">
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSpeedup" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -146,7 +148,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleStop" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="2">
+                  <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleStop" style="-fx-background-color: transparent;" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <graphic>
                         <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -155,7 +157,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="pausebutton" alignment="CENTER" contentDisplay="CENTER" disable="true" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePause" style="-fx-background-color: transparent;" textAlignment="CENTER" visible="false">
+                  <Button fx:id="pausebutton" alignment="CENTER" contentDisplay="CENTER" disable="true" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePause" style="-fx-background-color: transparent;" textAlignment="CENTER" visible="false" GridPane.rowIndex="1">
                      <graphic>
                         <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -177,12 +179,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Play/Pause" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="93.0" text="Play/Pause" />
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Slow" GridPane.columnIndex="1" />
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Stop" GridPane.columnIndex="2" />
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Fast" GridPane.columnIndex="3" />
                </children>
             </GridPane>
+            <Label fx:id="speedID" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="373.0" text="Speed = 120.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </bottom>
