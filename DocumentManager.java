@@ -39,13 +39,12 @@ public class DocumentManager {
 			}
 			
 			else{
+				 TxtSaver saver = new TxtSaver();
 				 try {
-			            FileWriter fileWriter = new FileWriter(file);
-			            fileWriter.write(text);
-			            fileWriter.close();
-			        } catch (IOException e) {
-			            e.printStackTrace();
-			        }
+					saver.SaveTxtFile(text,file);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 	}
 	
