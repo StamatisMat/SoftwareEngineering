@@ -2,11 +2,9 @@ package application;
 
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -31,6 +29,8 @@ public class SampleController {
 	File openfile;
 	ArrayList<File> recentfiles = new ArrayList<File>();
 	float speed=120.0f;
+	float volume=1.0f;
+	float pitch=120.0f;
 	Voice voice;
 	AudioPlayer audioplayer;
 	boolean isPlaying=false;
@@ -101,8 +101,9 @@ public class SampleController {
 		
 		final String text =temp_text;
     	lista.getItems().add(temp_text);
-    	float pitch = 120.0f + (float) pitchID.getValue();
-    	ftts.generateFTTS(text,speed, pitch);
+    	pitch = 120.0f + (float) pitchID.getValue();
+    	volume = (float) volumeID.getValue()/100;
+    	ftts.generateFTTS(text,speed, pitch, volume);
 	}// end handlePlay
 	
 	@FXML
@@ -121,6 +122,7 @@ public class SampleController {
 	@FXML
     public void handleListPlayer(MouseEvent click) {	 
         if (click.getClickCount() == 2) {
+        	handleStop();
         	handlePlay();
         }
     }//End handleListPlayer
@@ -155,12 +157,7 @@ public class SampleController {
 		setPauseButton(false);
 		ftts.fttsPause();
 	}//End handlePause
-	
-	@FXML
-	private void handleVolume() {
-		ftts.fttsHandleVolume((float) volumeID.getValue()/100);
-	}//End handleVolume
-	
+
 	@FXML
 	private void handleExit() {
 		System.exit(0);
@@ -285,7 +282,11 @@ public class SampleController {
 	//TODO
 	private void LoadData() {
 		ArrayList<String> data= new ArrayList <String>();
-		data = docmanager.loadDocument(openfile);
+		try {
+			data = docmanager.loadDocument(openfile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		filename.setText(openfile.getName());
 		recentfiles.add(openfile);
 		textArea.clear();
@@ -297,6 +298,5 @@ public class SampleController {
 	private void setSpeedOnLabels() {
 		String text="Speed = "+speed;
 		speedID.setText(text);
-	}
-	
+	}	
 }

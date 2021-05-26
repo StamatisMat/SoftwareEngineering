@@ -8,28 +8,31 @@ public class FTTSGenerator {
 	Voice voice;
 	Thread speechThread;
 	SampleController samplecontroller;
+	
 	public FTTSGenerator(SampleController samplecontroller) {
 	   this.samplecontroller=samplecontroller;
-	   System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-       VoiceManager voiceManager = VoiceManager.getInstance();
-       voice = voiceManager.getVoice("kevin16");
-       voice.allocate();
-		 //speechThread = new Thread(new Runnable() {
-	     //    public void run() {            
-	     //    }
-	     //});
 	}
-	public void generateFTTS(final String text,float speed,float pitch) {
-	    
+	
+	public void generateFTTS(final String text,float speed,float pitch,float volume) {
+		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
+		VoiceManager voiceManager = VoiceManager.getInstance();
+		voice = voiceManager.getVoice("kevin16");
 		voice.setPitch(pitch);
 	    voice.setRate(speed);
-	    
+	    voice.setVolume(volume);
+	    voice.allocate();
+	    //System.out.println(voice.getRate());
         speechThread = new Thread(new Runnable() {
             public void run() {
-            	samplecontroller.isPlaying = true;
-                voice.speak(text);
-                samplecontroller.isPlaying = false;
-                samplecontroller.setPauseButton(false);  
+        	    if(samplecontroller!=null) {
+                	samplecontroller.isPlaying = true;
+                    voice.speak(text);
+                    samplecontroller.isPlaying = false;
+                    samplecontroller.setPauseButton(false);  
+        	    }
+        	    else {
+        	    	voice.speak(text);
+        	    }
             }
         });
         speechThread.setDaemon(true);//kill all threads after main window close
@@ -48,11 +51,6 @@ public class FTTSGenerator {
 		return voice.getAudioPlayer();
 	}
 	
-	public void fttsHandleVolume(float volume) {
-		//System.out.println("hello from ftts: "+volume);
-		voice.setVolume(volume);
-	}
-	
 	public void fttsStop() {
 		speechThread.stop();
 		if(samplecontroller.isPlaying) {
@@ -68,7 +66,6 @@ public class FTTSGenerator {
 			}
 		}
 	}
-	
 	
 	public void fttsContinue() {
 		voice.getAudioPlayer().resume();

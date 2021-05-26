@@ -48,14 +48,10 @@ public class DocumentManager {
 			}
 	}
 	
-	public ArrayList<String> loadDocument(File file) {
+	public ArrayList<String> loadDocument(File file) throws IOException {
 		String filepath="";
 		
-		try {
-			filepath=file.getCanonicalPath();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		filepath=file.getCanonicalPath();
 		
 		ArrayList<String> data = new ArrayList<String>();
 		

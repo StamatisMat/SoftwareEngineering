@@ -92,7 +92,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Slider fx:id="volumeID" cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="1" onMouseDragged="#handleVolume" scaleX="0.75" showTickLabels="true" showTickMarks="true" value="100.0" GridPane.rowIndex="1" />
+            <Slider fx:id="volumeID" cache="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="1" scaleX="0.75" showTickLabels="true" showTickMarks="true" value="100.0" GridPane.rowIndex="1" />
             <Slider fx:id="pitchID" blockIncrement="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" min="-100.0" minorTickCount="10" scaleX="0.75" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Volume" />
             <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Pitch" GridPane.columnIndex="2" />
