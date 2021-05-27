@@ -61,7 +61,7 @@ public class SampleControllerTest {
     			lista.add("hii");
     		}
     	}
-		final String text = temp_text;
+
     	lista.add(temp_text);
     	assertEquals(lista.size(),4);
 	}
