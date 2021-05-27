@@ -74,9 +74,10 @@ public class SampleController {
 		setPauseButton(true);
 		
     	String temp_text = textArea.getSelectedText();
+    	//Check for selection empty, then select whole textArea
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
-            if(temp_text.equals("")) {
+            if(temp_text.equals("")) { //Check if text area emtpy
                 setPauseButton(false);
                 return;
             }   
@@ -189,7 +190,6 @@ public class SampleController {
 					choices.add(0,file.getCanonicalPath());
 				}	
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 		}
@@ -282,11 +282,9 @@ public class SampleController {
 	//TODO
 	private void LoadData() {
 		ArrayList<String> data= new ArrayList <String>();
-		try {
-			data = docmanager.loadDocument(openfile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		data = docmanager.loadDocument(openfile);
+		
+		
 		filename.setText(openfile.getName());
 		recentfiles.add(openfile);
 		textArea.clear();

@@ -48,28 +48,33 @@ public class DocumentManager {
 			}
 	}
 	
-	public ArrayList<String> loadDocument(File file) throws IOException {
+	public ArrayList<String> loadDocument(File file) {
 		String filepath="";
 		
-		filepath=file.getCanonicalPath();
+		try {
+			filepath=file.getCanonicalPath();
+			
+			ArrayList<String> data = new ArrayList<String>();
+			
+			if (filepath.endsWith("doc") || filepath.endsWith("docx")) {
+				WordReader wordfile = new WordReader();
+				data = wordfile.fileReader(file);
+			}
+			
+			else if (filepath.endsWith("xls") || filepath.endsWith("xlsx")) {
+				ExcelReader wordfile = new ExcelReader();
+				data = wordfile.fileReader(file);
+			}
+			
+			else if (filepath.endsWith("txt")) {
+				TxtReader txtfile = new TxtReader();
+				data = txtfile.fileReader(file);
+			}
 		
-		ArrayList<String> data = new ArrayList<String>();
-		
-		if (filepath.endsWith("doc") || filepath.endsWith("docx")) {
-			WordReader wordfile = new WordReader();
-			data = wordfile.fileReader(file);
+			return data;
+		}catch (IOException e) {
+			//Should never get here
+			return null;
 		}
-		
-		else if (filepath.endsWith("xls") || filepath.endsWith("xlsx")) {
-			ExcelReader wordfile = new ExcelReader();
-			data = wordfile.fileReader(file);
-		}
-		
-		else if (filepath.endsWith("txt")) {
-			TxtReader txtfile = new TxtReader();
-			data = txtfile.fileReader(file);
-		}
-		
-		return data;
 	}
 }
