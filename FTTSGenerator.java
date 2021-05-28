@@ -12,11 +12,8 @@ public class FTTSGenerator {
 	Voice voice;
 	Thread speechThread;
 	SampleController samplecontroller;
-<<<<<<< Updated upstream
-=======
-	
+
 	// Constructor sets the sample controller
->>>>>>> Stashed changes
 	public FTTSGenerator(SampleController samplecontroller) {
 	   this.samplecontroller=samplecontroller;
 	   System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
@@ -28,12 +25,7 @@ public class FTTSGenerator {
 	     //    }
 	     //});
 	}
-<<<<<<< Updated upstream
-	public void generateFTTS(final String text,float speed,float pitch) {
-	    
-		voice.setPitch(pitch);
-	    voice.setRate(speed);
-=======
+
 	
 	// Generator function sets the parameters of FTTS, generates a speechThread and runs it
 	public void generateFTTS(final String text,float speed,float pitch,float volume) {
@@ -46,7 +38,6 @@ public class FTTSGenerator {
 	    voice.setVolume(volume);
 	    voice.allocate();
 	    
->>>>>>> Stashed changes
 	    
         speechThread = new Thread(new Runnable() {
             public void run() {
@@ -75,22 +66,19 @@ public class FTTSGenerator {
 		return voice.getAudioPlayer();
 	}
 	
-<<<<<<< Updated upstream
+
 	public void fttsHandleVolume(float volume) {
 		//System.out.println("hello from ftts: "+volume);
 		voice.setVolume(volume);	
 	}
 	
-	public void fttsStop() {
-		speechThread.stop();
-=======
+
 	// Function to stop the speechThread and audio
 	public void fttsStop() {
 		speechThread.stop();
 		if(samplecontroller.isPlaying) {
 			voice.getAudioPlayer().resume(); //We resume to avoid keeping the pause for the next hearing
 		}
->>>>>>> Stashed changes
 		voice.getAudioPlayer().cancel();
 	}
 	
@@ -102,12 +90,9 @@ public class FTTSGenerator {
 			}
 		}
 	}
-	
-<<<<<<< Updated upstream
-	
-=======
+
 	// Simple continue function
->>>>>>> Stashed changes
+
 	public void fttsContinue() {
 		voice.getAudioPlayer().resume();
 	}
