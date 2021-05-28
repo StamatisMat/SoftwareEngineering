@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	// Simple main class that loads the fxml file
 	@Override
 	public void start(Stage primaryStage) {
 		try {
