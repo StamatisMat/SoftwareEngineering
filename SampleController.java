@@ -2,15 +2,14 @@ package application;
 
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
@@ -22,6 +21,8 @@ import javafx.stage.Stage;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.audio.AudioPlayer;
 
+import application.Encodings.*;
+
 
 
 public class SampleController {
@@ -29,14 +30,12 @@ public class SampleController {
 	File openfile;
 	ArrayList<File> recentfiles = new ArrayList<File>();
 	float speed=120.0f;
-	float volume=1.0f;
-	float pitch=120.0f;
 	Voice voice;
 	AudioPlayer audioplayer;
+	VolumeControl volumeController;
 	boolean isPlaying=false;
 	FTTSGenerator ftts = new FTTSGenerator(this);
-	DocumentManager docmanager = new DocumentManager();
-
+	
 	@FXML
 	TextArea textArea;
 
@@ -58,10 +57,10 @@ public class SampleController {
 	@FXML
 	Slider pitchID;
 	
-	@FXML 
-	Label speedID;
 	
 	
+	
+	// Function to swap between the pause and the play button 
     public void setPauseButton(boolean var) {
         playbutton.setDisable(var);
         playbutton.setVisible(!var);
@@ -69,50 +68,85 @@ public class SampleController {
         pausebutton.setVisible(var);
     }
 	
+    
+    //Handles the press of the button "play", we set the var temp_text to the text we want, then we store it to a final variable so we pass it to FTTSGenerator
 	@FXML
-	private void handlePlay() {		
+<<<<<<< Updated upstream
+	private void handlePlay() {
 		setPauseButton(true);
+
+=======
+	private void handlePlay() {		
+		setPauseButton(true); //Swaps to the pause button
 		
+>>>>>>> Stashed changes
     	String temp_text = textArea.getSelectedText();
     	//Check for selection empty, then select whole textArea
     	if(temp_text.equals("")) {
             temp_text = textArea.getText();
-            if(temp_text.equals("")) { //Check if text area emtpy
+<<<<<<< Updated upstream
+            //System.out.println(temp_text);
+            if(temp_text.equals("")) {
+=======
+            if(temp_text.equals("")) { //Check if text area empty
+>>>>>>> Stashed changes
                 setPauseButton(false);
                 return;
             }   
         }
     	
+    	// Handle continuation
     	int listsize=lista.getItems().size();
+<<<<<<< Updated upstream
+    	//System.out.println(temp_text);
     	if(listsize>0) {
     		if(isPlaying&&(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals(""))) {
+    			//System.out.println(temp_text);
+    			//System.out.println("prepei na paw parakatw");
+=======
+    	if(listsize>0) { //if recent playback
+    		if(isPlaying&&(temp_text.equals(lista.getItems().get(listsize-1)) || temp_text.equals(""))) { //if playing and selection has not changed
+>>>>>>> Stashed changes
     			handleContinue();
     			return;
     		}
     	}
     	
+    	// Handles play by history listView
     	int index = lista.getSelectionModel().getSelectedIndex();
-    	if(index!=-1) {
+    	if(index!=-1) { 
     		temp_text=(String) lista.getSelectionModel().getSelectedItem();
     		lista.getSelectionModel().clearSelection(index);
     	}
     	
-    	
+    	// If it gets here, it needs to play new audio rather than continue playing so it needs to stop the previous audio
     	ftts.fttsStopRunningThread();
 		
 		final String text =temp_text;
+<<<<<<< Updated upstream
     	lista.getItems().add(temp_text);
+    	//System.out.println("Volume: "+volumeID.getValue());
+    	float pitch = 120.0f + (float) pitchID.getValue();
+    	ftts.generateFTTS(text,speed, pitch);
+=======
+    	lista.getItems().add(temp_text); // add to recent files
+    	// sets the parameters for ftts and calls it
     	pitch = 120.0f + (float) pitchID.getValue();
     	volume = (float) volumeID.getValue()/100;
     	ftts.generateFTTS(text,speed, pitch, volume);
+>>>>>>> Stashed changes
 	}// end handlePlay
 	
+	// Simple handler for Rot encoding
 	@FXML
+<<<<<<< Updated upstream
+=======
 	public void handleRot() {
 		Encoding rot = new Rot();
 		textArea.setText(rot.encode(textArea.getText()));
 	}
 	
+	// Simple handler for Atbash encoding
 	@FXML
 	public void handleAtbash() {
 		Encoding atbash = new Atbash();
@@ -120,56 +154,86 @@ public class SampleController {
 	}
 	
 	
+	// Simple handler for double click on history list
 	@FXML
+>>>>>>> Stashed changes
     public void handleListPlayer(MouseEvent click) {	 
         if (click.getClickCount() == 2) {
-        	handleStop();
         	handlePlay();
         }
-    }//End handleListPlayer
+    }
 	
+	// Simple handler for Speed increase
 	@FXML
 	private void handleSpeedup() {
 		speed+=10;
+<<<<<<< Updated upstream
+		//System.out.println(speed);
+	}//End handle
+	
+=======
 		setSpeedOnLabels();
 	}//End handleSpeedup
-	
+
+	// Simple handler for Speed decrease
+>>>>>>> Stashed changes
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
-		setSpeedOnLabels();
+		//System.out.println(speed);
 	}//End handleSpeeddown
 	
+	// Handler for stopping the audio
 	@FXML
 	private void handleStop() {
 		setPauseButton(false);
-		ftts.fttsStop();		
 		isPlaying=false;
+		ftts.fttsStop();
 	}//End handleStop
 	
+	// Handler for continue
 	@FXML
 	private void handleContinue() {
 		setPauseButton(true);
 		ftts.fttsContinue();
 	}//End handleContinue
 	
+	// Handler for pause
 	@FXML
 	private void handlePause() {
 		setPauseButton(false);
 		ftts.fttsPause();
 	}//End handlePause
+<<<<<<< Updated upstream
+	
+	@FXML
+	private void handleVolume() {
+		//System.out.println("VOLUMEEEE: "+volumeID.getValue());
+		ftts.fttsHandleVolume((float) volumeID.getValue()/100);
+		//volumeController.setVolume((float) volumeID.getValue()/100);
+		
+	}
+	
+=======
 
+	// Handler for Exit (button)
+>>>>>>> Stashed changes
 	@FXML
 	private void handleExit() {
 		System.exit(0);
 	}// end handleExit
 	
+	// Handler for clearing 
 	@FXML
+<<<<<<< Updated upstream
+=======
 	private void handleClear() {
 		lista.getItems().clear();
 	}// end handleClear
 	
+	// Handler for About
 	@FXML
+>>>>>>> Stashed changes
 	private void handleAbout() {
 		Label label=new Label("Dimosthenis Georgoulas AM 4039\nStamatis Matziounis AM 4107\nLiatsos Nikolaos AM 4101");
 		label.setWrapText(true);
@@ -178,12 +242,18 @@ public class SampleController {
 		alert.setHeaderText("Software Engineering Project");
 		alert.getDialogPane().setContent(label);
 		alert.showAndWait();
-	}// end handleAbout
+	}
 	
+	//Handler for Recent files
 	@FXML
+<<<<<<< Updated upstream
+	private void handleRecentFiles(File file) {
+		System.exit(0);
+=======
 	private void handleRecentFiles() {
 		ArrayList<String> choices = new ArrayList<>();
-		File prevfile=openfile;
+		File prevfile=openfile; // We keep the previous file to return if the selection is invalid
+		// loop runs through the list and builds a string list of paths to display on the decision window 
 		for(File file: recentfiles){
 			try {
 				if(!choices.contains(file.getCanonicalPath())) {
@@ -194,7 +264,7 @@ public class SampleController {
 			}
 		}
 		
-		if(choices.isEmpty()) {
+		if(choices.isEmpty()) { // If the list is empty, we should not put a decision window
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
 			alert.setHeaderText("Recent Files Warning");
@@ -204,17 +274,18 @@ public class SampleController {
 			return;
 		}
 		
+		// The list is not empty, so we build a choice dialog to get another file
 		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
 		dialog.setTitle("Recent Files");
 		dialog.setHeaderText("Open recent file");
 		dialog.setContentText("Choose your file:");
 
 		Optional<String> result = dialog.showAndWait();
-		if(!result.isPresent()) {
+		if(!result.isPresent()) { //If the file we want is the same we have open we return
 			return;
 		}
-		openfile=new File(result.get());
-		if(!openfile.isFile()) {
+		openfile=new File(result.get()); //We get the new file 
+		if(!openfile.isFile()) { // Check if the file is valid, then if it is not we display an error message and return to previous file
 			recentfiles.remove(openfile);
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.setTitle("Warning Dialog");
@@ -224,12 +295,17 @@ public class SampleController {
 			openfile=prevfile;
 			return;
 		}
-		LoadData();
+		LoadData(); // We load the data from the file
 		
+>>>>>>> Stashed changes
 	}// end handleRecentFiles
     
+	// Simple Load Handler that creates a fileChooser and opens a file
 	@FXML
-	private void handleLoad() {		
+	private void handleLoad() {
+		String fileextension = "";
+		ArrayList<String> data = new ArrayList<String>();
+		
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Pick a file");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -240,15 +316,46 @@ public class SampleController {
 				new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
 				new FileChooser.ExtensionFilter("Text", "*.txt"));
 		openfile = fileChooser.showOpenDialog(new Stage());
+<<<<<<< Updated upstream
 		if (openfile == null) return;
+		
+		fileextension = getFileExtension(openfile);
+		if (fileextension.equals("doc") || fileextension.equals("docx")) {
+			WordReader wordfile = new WordReader();
+			data = wordfile.fileReader(openfile);
+		}
+		
+		else if (fileextension.equals("xls") || fileextension.equals("xlsx")) {
+			ExcelReader wordfile = new ExcelReader();
+			data = wordfile.fileReader(openfile);
+		}
+		
+		else if (fileextension.equals("txt")) {
+			TxtReader txtfile = new TxtReader();
+			data = txtfile.fileReader(openfile);
+		}
+		
+		textArea.clear();
+		filename.setText(openfile.getName());
+		recentfiles.add(openfile);
+		for (int i = 0; i < data.size(); i++) {
+			textArea.appendText(data.get(i));
+		}
+=======
+		if (openfile == null) return; // If file invalid then return
 
-		LoadData();
+		LoadData(); // We load the data from the file
+>>>>>>> Stashed changes
 	}// end handleLoad
 	
 	
+	// Simple Handler for Saving As that creates a  fileChooser, stores the file and loads it 
     @FXML
+<<<<<<< Updated upstream
     private void handleSaveAs() {
-		
+=======
+    private void handleSaveAs() {		
+>>>>>>> Stashed changes
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save File");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -258,33 +365,71 @@ public class SampleController {
                 new FileChooser.ExtensionFilter("Excel-2003", "*.xls"),
                 new FileChooser.ExtensionFilter("Excel", "*.xlsx"),
                 new FileChooser.ExtensionFilter("Text", "*.txt"));
-        openfile = fileChooser.showSaveDialog(new Stage());    
+        File savefile = fileChooser.showSaveDialog(new Stage());
         
+<<<<<<< Updated upstream
+        if(savefile==null) return;
+        
+        try {
+            FileWriter fileWriter = new FileWriter(savefile);
+            fileWriter.write(textArea.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }// end handleLoad
+=======
         if(openfile==null) return;
 
-        docmanager.saveDocument(openfile, textArea.getText());
+        docmanager.saveDocument(openfile, textArea.getText()); // We save the document
             
-		LoadData();
+		LoadData(); // We load the data from the new file
     }// end handleSaveAs
+>>>>>>> Stashed changes
     
+    // Simple Save handler
     @FXML
     private void handleSave() {
-    	if(openfile==null) {
+<<<<<<< Updated upstream
+        try {
+            FileWriter fileWriter = new FileWriter(openfile);
+            fileWriter.write(textArea.getText());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }// end handleLoad
+
+
+
+	private static String getFileExtension(File file) {
+		String fileName = file.getName();
+		if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+			return fileName.substring(fileName.lastIndexOf(".") + 1);
+		else
+			return "";
+	}
+	
+
+}
+
+=======
+    	if(openfile==null) { // If we have an invalid file, we need to save as a file
     		handleSaveAs();
     		if(openfile==null) return;
     		LoadData();	
     	}
-    	else {
+    	else { // If the file is valid, we save it
     		docmanager.saveDocument(openfile, textArea.getText());
     	}
     }// end handleSave
 	
-	//TODO
+	// Simple data loader
 	private void LoadData() {
 		ArrayList<String> data= new ArrayList <String>();
-		data = docmanager.loadDocument(openfile);
+		data = docmanager.loadDocument(openfile); // load the data via the Document Manager
 		
-		
+		// Set the file name label to the correct file, add the file to Recent Files then set the textArea to the data we loaded 
 		filename.setText(openfile.getName());
 		recentfiles.add(openfile);
 		textArea.clear();
@@ -293,8 +438,10 @@ public class SampleController {
 		}	
 	}
 	
+	// Simple setter function to update the speed label
 	private void setSpeedOnLabels() {
 		String text="Speed = "+speed;
 		speedID.setText(text);
 	}	
 }
+>>>>>>> Stashed changes
