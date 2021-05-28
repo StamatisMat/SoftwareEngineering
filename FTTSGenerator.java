@@ -20,10 +20,6 @@ public class FTTSGenerator {
        VoiceManager voiceManager = VoiceManager.getInstance();
        voice = voiceManager.getVoice("kevin16");
        voice.allocate();
-		 //speechThread = new Thread(new Runnable() {
-	     //    public void run() {            
-	     //    }
-	     //});
 	}
 
 	
