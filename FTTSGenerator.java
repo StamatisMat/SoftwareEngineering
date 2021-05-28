@@ -28,13 +28,14 @@ public class FTTSGenerator {
 		System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 		VoiceManager voiceManager = VoiceManager.getInstance();
 		
+		// Set voice parameters
 		voice = voiceManager.getVoice("kevin16");
 		voice.setPitch(pitch);
 	    voice.setRate(speed);
 	    voice.setVolume(volume);
 	    voice.allocate();
 	    
-	    
+		// Create speech thread	    
         speechThread = new Thread(new Runnable() {
             public void run() {
             	samplecontroller.isPlaying = true;
