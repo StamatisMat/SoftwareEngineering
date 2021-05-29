@@ -136,6 +136,7 @@ public class SampleController {
 	@FXML
     public void handleListPlayer(MouseEvent click) {	 
         if (click.getClickCount() == 2) {
+        	handleStop();
         	handlePlay();
         }
     }
@@ -151,7 +152,7 @@ public class SampleController {
 	@FXML
 	private void handleSpeeddown() {
 		speed-=10;
-		//System.out.println(speed);
+		setSpeedOnLabels();
 	}//End handleSpeeddown
 	
 	// Handler for stopping the audio
